@@ -1,0 +1,28 @@
+input{
+    width: 50%;
+}
+
+.commands{
+    display: flex;
+    flex-direction: column;
+}
+
+.commands *{
+    margin: auto;
+    margin-top: 10px;
+    margin-left: 0;
+}
+
+.copy-in-order{
+    margin-top: 20px;
+}
+
+.copied::before{
+    content: "・";
+    color: red;
+    font-size: large;
+}
+
+body{
+    user-select: none;
+}

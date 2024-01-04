@@ -1,0 +1,32 @@
+16size
+
+execute as @a[nbt={SelectedItem:{id:"minecraft:chicken_spawn_egg"}}] at @s anchored eyes run summon armor_stand ^ ^ ^1 {NoGravity:true,Tags:["temp"]}
+
+kill @e[tag=miniblock_temp]
+
+execute as @e[tag=temp] store result entity @s Pos[0] double 0.0625 run data get entity @s Pos[0] 16
+
+execute as @e[tag=temp] store result entity @s Pos[1] double 0.0625 run data get entity @s Pos[1] 16
+
+execute as @e[tag=temp] store result entity @s Pos[2] double 0.0625 run data get entity @s Pos[2] 16
+
+execute as @e[tag=temp] at @s run summon interaction ~0.03125 ~ ~0.03125 {width:0.0625f,height:0.0625f,Tags:["miniblock_temp"]}
+
+kill @e[tag=temp]
+
+execute as @e[type=item,nbt={Item:{id:"minecraft:chicken_spawn_egg", tag:{display:{Name:'"miniblock"'}}}}] at @e[tag=miniblock_temp] run summon block_display ~-0.03125 ~ ~-0.03125 {Tags:["miniblock"],transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],translation:[0f,0f,0f],scale:[0.0625f,0.0625f,0.0625f]}}
+
+execute as @e[tag=miniblock,nbt={block_state:{Name:"minecraft:air"}}] run data modify entity @s block_state.Name set from entity @p Inventory[{Slot:-106b}].id
+
+execute as @e[type=item,nbt={Item:{id:"minecraft:chicken_spawn_egg", tag:{display:{Name:'"miniblock"'}}}}] run kill @s
+
+
+delete
+
+execute as @e[type=block_display] run data modify entity @s Glowing set value false
+
+execute as @a[nbt={SelectedItem:{tag:{display:{Name:'"delete"'}}}}] at @s anchored eyes positioned ^ ^ ^1 run data modify entity @e[type=block_display,sort=nearest,limit=1] Glowing set value true
+
+execute if entity @e[type=item,nbt={Item:{tag:{display:{Name:'"delete"'}}}}] run kill @e[type=block_display,nbt={Glowing:true}]
+
+kill @e[type=item,nbt={Item:{tag:{display:{Name:'"delete"'}}}}]
